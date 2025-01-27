@@ -17,7 +17,7 @@ The inputs are 2 arrays representing the low and high queue, each array contains
 
 =Visual representation of a lock=
 
-
+![Simple illustration of a canal lock](illustration.png)
 
 
 # Approach
