@@ -55,15 +55,40 @@ This class represents a boat
 
 * int m_length: The length of the boat, and also the time for the boat to enter and leave
 
-## CanalManagement
+## Canal
 This class represent the canal, which contains all the logics that deal with the operation of the canal
 
 * Lock m_Lock: The lock
 * BoatQueue m_lowQueue: The low queue
 * BoatQueue m_highQueue: The high queue
-* int start(): Start the process and return the time to process all the queue
+* int process(): Start the process and return the time to process all the queue
+
+# Class interaction
+
+The classes in this design interact with each other as follows:
+
+## Canal
+### Interacts with Lock
+Canal uses the Lock object to manage the entry and exit of boats. The process() method in Canal will call the fill(), empty(), and setCurrentBoats() methods of Lock to control this process.
+
+### Interacts with BoatQueue 
+Canal uses two BoatQueue objects (one for the low queue and one for the high queue). The process() method will check and retrieve boats from these queues by calling the getMaxBoatsToLock(), removeBoat(), and isEmpty() methods.
+
+## Lock
+### Interacts with Boat
+Lock contains Boat objects in the m_currentBoats array. When boats enter or leave the lock, Lock will update this array and calculate the required time.
+
+## BoatQueue
+### Interacts with Boat
+BoatQueue contains Boat objects in the m_boats array. When boats need to be moved into the lock, BoatQueue will use the getMaxBoatsToLock() method to find the maximum number of boats that can fit in the lock and the removeBoat() method to remove these boats from the queue.
+
+## Boat
+### Interacts with Lock and BoatQueue
+Boat is the basic component contained within Lock and BoatQueue. Each boat has a m_length attribute to determine the time it takes to enter and leave the lock.
+
 
 # Program flow 
+The execution point of the program will be in Canal.process(). This is the pseudo code of how it will run:
 
 ```
 * Set the total time = 0
@@ -83,3 +108,6 @@ This class represent the canal, which contains all the logics that deal with the
 * If the lock is full, empties it and add to the total time
 * Return the total time
 ```
+# Testing
+
+Unit Testing for each components' logic
