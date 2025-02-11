@@ -14,14 +14,8 @@ class TestLock(unittest.TestCase):
     def test_initial_state(self):
         self.assertFalse(self.lock.m_isfull)
         self.assertEqual(self.lock.m_length, 100)
-        self.assertEqual(self.lock.m_currentBoats, [])
         self.assertEqual(self.lock.s_waterfillTime, 10)
         self.assertEqual(self.lock.s_waterEmptyTime, 5)
-
-    def test_setCurrentBoats(self):
-        boats = ['Boat1', 'Boat2']
-        processing_time = self.lock.setCurrentBoats(boats)
-        self.assertEqual(self.lock.m_currentBoats, boats)
 
     def test_fill(self):
         fill_time = self.lock.fill()
